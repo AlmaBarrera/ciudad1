@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+       <!-- <link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <!-- Latest compiled and minified CSS -->
+
+         <title>Editar</title>
+         <script src="cordova.js"></script>
+         <script src="/js/index.js"></script>
+   		 <script type="text/javascript" charset="utf-8">
+
+        // Wait for Cordova to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+        
+         
+
+        var currentRow;
+        // Populate the database
+        //
+        function populateDB(tx) {
+        //	tx.executeSql('DROP TABLE IF EXISTS DEMO2 ');
+        ///	alert("drop");
+         //   tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO2 (id INTEGER PRIMARY KEY AUTOINCREMENT, name,img,ubicacion,coment,tag,fecha,hora)');
+          //  alert("creandoDB");
+        }
+
+        // Query the database
+        //
+        function queryDB(tx) {
+            tx.executeSql('SELECT * FROM DEMO2', [], querySuccess, errorCB);
+        }
+
+        function searchQueryDB(tx) {
+            tx.executeSql("SELECT * FROM DEMO2 where name like ('%"+ document.getElementById("txtName").value + "%')",
+                    [], querySuccess, errorCB);
+        }
+        // Query the success callback
+        //
+        function querySuccess(tx, results) {
+//var tblText='<table id="t01"><tr><th>ID</th><th>Name</th><th>Img</th><th>Ubicación</th><th>Coment</th><th>Tag</th><th>Fecha</th><th>Hora</th> </tr>';
+            var tblText='<table id="t01"><tr><th> # </th></th><th>Evento </th><th> Fecha </th><th>Hora </th></tr>';
+            var len = results.rows.length;
+            for (var i = 0; i < len; i++) {
+                var tmpArgs=results.rows.item(i).id + ",'" + results.rows.item(i).name  +"',"+
+                									   //"'" + results.rows.item(i).img+"',"+
+                								//	   "'" + results.rows.item(i).ubicacion +"',"+
+                								//	   "'" + results.rows.item(i).coment  +"',"+
+                								//	   "'" + results.rows.item(i).tag  +"',"+
+                									   "'" + results.rows.item(i).fecha +"',"+
+                									   "'" + results.rows.item(i).hora+"'";
+                tblText +='<tr onclick="goPopup('+ tmpArgs + ');">'+
+                				'<td>' + results.rows.item(i).id     +'</td>'+
+                				'<td>' + results.rows.item(i).name   +'</td>'+
+                				'<td>' + results.rows.item(i).fecha +'</td>'+
+                				'<td>' + results.rows.item(i).hora    +'</td>'+
+                		  '</tr>';
+            }
+            tblText +="</table>";
+            document.getElementById("tblDiv").innerHTML =tblText;
+        }
+
+        //Delete query
+        function deleteRow(tx) {
+          tx.executeSql('DELETE FROM DEMO2 WHERE id = ' + currentRow, [], queryDB, errorCB);
+        }
+
+        // Transaction error callback
+        //
+        function errorCB(err) {
+            alert("Error processing SQL: "+err.code+ err.description);
+        }
+
+        // Transaction success callback
+        //
+        function successCB() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo2", 200000);
+            db.transaction(queryDB, errorCB);
+        //    alert("successCB");
+        }
+
+         // Cordova is ready
+        //
+        function onDeviceReady() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo2", 200000);
+            db.transaction(populateDB, errorCB, successCB);
+           // alert("onDeviceReady");
+        }
+
+        //Insert query
+        //
+        function insertDB(tx) {
+            tx.executeSql('INSERT INTO DEMO2 (name,img,ubicacion,coment,tag,fecha,hora) VALUES ('+ 
+            		'"' +document.getElementById("txtName").value  +'",'+
+            		'"' +document.getElementsByName("txtImg").value+'",'+
+                    '"' +document.getElementsByName("txtUbicacion").value +'",'+
+            		'"' +document.getElementById("txtComent").value  +'",'+
+            		'"' +document.getElementById("txtTag").value  +'",'+
+            		'"' +document.getElementsByName("txtFecha").value +'",'+
+            		'"' +document.getElementsByName("txtHora").value +'"'
+            			 +')');
+            document.getElementById("txtName").value="";
+            document.getElementsByName("txtImg").value;	
+            document.getElementsByName("txtUbicacion").value="";	
+            document.getElementById("txtComent").value="";	
+            document.getElementById("txtTag").value=""; 
+            document.getElementsByName("txtFecha").value; 
+            document.getElementsByName("txtHora").value;
+            
+        }
+
+        function goInsert() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo2", 200000);
+            db.transaction(insertDB, errorCB, successCB);
+            goDate();
+            
+        }
+
+        function goSearch() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo2", 200000);
+            db.transaction(searchQueryDB, errorCB);
+        }
+
+        function goDelete() {
+             var db = window.openDatabase("Database", "1.0", "Cordova Demo2", 200000);
+             db.transaction(deleteRow, errorCB);
+             alert("¡Publicación eliminada!");
+             location.href="compartir.html";
+             //document.getElementById('qrpopup').style.display='none';
+        }
+
+        //Show the popup after tapping a row in table
+        //
+        function goPopup(row,rowname,rowimg,rowubi,rowcoment,rowtag,rowfecha,rowhora) {
+            currentRow=row;
+            document.getElementById("qrpopup").style.display="block";
+            document.getElementById("editNameBox").value = rowname;
+            document.getElementById("editImgBox").value = rowimg;
+            document.getElementById("editUbicacionBox").value = rowubi;
+            document.getElementById("editComentBox").value = rowcoment;
+            document.getElementById("editTagBox").value = rowtag;
+            document.getElementById("editFechaBox").value = rowfecha;
+            document.getElementById("editHoraBox").value = rowhora;
+        }
+        function editRow(tx) {
+            tx.executeSql('UPDATE DEMO2 SET name  ="'+document.getElementById("editNameBox").value+'",'+
+            							 ' img="'+document.getElementById("editImgBox").value+ '",'+
+            							 ' ubicacion="'+document.getElementById("editUbicacionBox").value+ '",'+
+            							 ' coment="'+document.getElementById("editComentBox").value+ '",'+
+            							 ' tag="'+document.getElementById("editTagBox").value+ '",'+
+            							 ' fecha ="'+document.getElementById("editFechaBox").value+ '",'+
+            							 ' hora ="'+document.getElementById("editHoraBox").value+ '"'+
+            							 ' WHERE id = '
+                    + currentRow, [], queryDB, errorCB);
+        }
+        function goEdit() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo2", 200000);
+            db.transaction(editRow, errorCB);
+            alert("¡Cambios guardados!");
+             location.href="compartir.html";
+             document.getElementById('qrpopup').style.display='none';
+        }
+		function goDate(){
+		var d = new Date();
+		var fecha_actual =d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear();
+		var hora_actual =d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+		document.getElementsByName("txtFecha").value = fecha_actual;
+		document.getElementsByName("txtHora").value = hora_actual;
+		document.getElementById("txtFecha").value = fecha_actual;
+		document.getElementById("txtHora").value = hora_actual;
+		return (fecha_actual, hora_actual);
+		}
+
+		function goCancel(){
+			alert("¡Operación cancelada!");
+             location.href="compartir.html";
+		}
+    </script>
+    </head>
+    <body>
+    <div class="container" >
+    		<h4 align="left">Ver publicaciones <a href="compartir.html" ><img src="img/house24.png" alt="" align="right" /></a></h4>
+
+    
+    
+
+<!--Insertar-->
+    <div>
+<!--        Names<input type="text" value="" id="txtName"><hr/>
+        Img<input type="image" value="" id="txtImg" width="80%" height="200px"> <hr/>
+	        <button onclick="capturePhoto()">Foto</button>
+	        <button onclick="capturePhoto1()">getFoto</button>
+         <hr/>-->
+        <!--Ubicación<input type="text" value="" id="txtUbicacion">-->
+        <!--Ubicación<div id="map"></div>
+        <button onclick="miUbicacion()">Mi ubicacion</button>
+    	<button onclick="ponerMarca(19.352782,-99.282443)">UAM</button>-->
+        <!--Coment<input type="text" value="" id="txtComent"><hr/>-->
+       <!-- Tag<input type="text" value="" id="txtTag"><hr/>-->
+    </div>
+<!--Botones-->    
+    <div id="tblDiv"></div>
+    <div style="text-align: center">
+        <!--<button onclick="goInsert()">Insert</button>-->
+     <!--   <button onclick="goSearch()">Search</button>
+        <button onclick="successCB()">Show All</button>-->
+    </div>
+    
+    <!--Editar-->
+    <div id="qrpopup"  > 
+            <hr/>
+            <input type="text" id="editNameBox" class="form-control"><br>
+            <input type="text" id="editImgBox"  class="form-control" ><br>
+            <input type="text" id="editUbicacionBox" class="form-control"><br>
+             <input type="text" id="editComentBox" class="form-control"><br>
+            <input type="text" id="editTagBox" class="form-control"><br>
+            <input type="text" id="editFechaBox" class="form-control"><br>
+          <input type="text" id="editHoraBox" class="form-control"><br> 
+            
+       <center> <button onclick="goDelete()" class="btn btn-danger"><img src="img/delete-.png" alt="" /></button>
+        <button onclick="goCancel()" class="btn btn-default"><img src="img/cancel-.png" alt="" /></button>
+        <button onclick="goEdit()" class="btn btn-success"><img src="img/ok-.png" alt="" /></button></center>
+    </div>
+<!--Mapa-->
+    <script> 
+    		var mapDiv;
+    		var map;
+    		var marca;
+
+    		function initMap(){
+    			mapDiv= document.getElementById('map');
+    			map= new google.maps.Map(mapDiv, {
+    				center: {lat: 21.081709, lng:  -99.126830},
+    				zoom: 4
+    			});
+    			alert("inicia mapa")
+    		}
+
+    		function ponerMarca(latitude, longitude){
+    			map.setZoom(15);
+    			map.setCenter({lat: latitude, lng:longitude});
+    			marca= new google.maps.Marker({
+    				position: {lat: latitude, lng: longitude},
+    				map:map
+    			});
+
+    			alert("poner marca");
+    		}
+
+			function miUbicacion(){
+				//Si el navegador soporta geolocalizacion
+				if(navigator.geolocation){
+					navigator.geolocation.getCurrentPosition(
+						showPosition,
+						showError);
+
+				}
+
+				//Si el navegador no soporta
+				else{
+					alert("Tu navegador no soporta geolocalizacion");
+				}
+			}
+ 
+			function showPosition(position){
+				ponerMarca(position.coords.latitude, position.coords.longitude);
+				alert("a"+position.coords.latitude);
+				alert("b"+position.coords.longitude);	
+				var x=(position.coords.latitude+","+position.coords.longitude);
+				alert(x);
+				document.getElementsByName("txtUbicacion").value = x;
+					
+			}
+
+			function showError(error){
+				alert(error.code);
+				alert("error");
+			}
+
+		</script>
+	<script src="http://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+<!--Archivo-->		
+
+
+<script>
+//funcion para activar la cámara del dispositivo móvil
+function capturePhoto() { 
+  alert("Take picture DATA");
+    navigator.camera.getPicture(onSuccess, onFail, { quality: 90, 
+        destinationType: Camera.DestinationType.DATA_URL, 
+        correctOrientation: true, 
+        targetWidth: 1000, 
+        targetHeight: 1000 
+    }); 
+  
+}
+function capturePhoto1() { 
+  alert("Take picture URI");
+	navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+    destinationType: Camera.DestinationType.FILE_URI,  
+        correctOrientation: true, 
+        targetWidth: 1000, 
+        targetHeight: 1000 
+    }); 
+  
+}
+function onSuccess(imageData) { 
+alert("imagedata");
+var image = document.getElementById('txtImg'); 
+    image.src = "data:image/jpeg;base64," + imageData;
+alert("ok");
+    document.getElementById("txtImg").style.backgroundImage="url('data:image/jpeg;base64,"+imageData+"')"; 
+    document.getElementById("txtImg").style.backgroundSize="100% 100%"; 
+    document.getElementsByName("txtImg").value=document.getElementById("txtImg").style.backgroundImage="url('data:image/jpeg;base64,"+imageData+"')"; 
+    alert(document.getElementsByName("txtImg").value);
+alert("image");
+document.getElementById("txtrecuperar").style.backgroundImage="url('data:image/jpeg;base64,"+imageData+"')"; 
+} 
+
+function onPhotoURISuccess(imageURI) { 
+alert("imageUri");
+     var image = document.getElementById('txtImg'); 
+    image.src = imageURI; 
+alert("ok");
+    document.getElementById("txtImg").style.backgroundImage="url('"+imageURI+"')"; 
+    document.getElementById("txtImg").style.backgroundSize="100% 100%"; 
+    document.getElementsByName("txtImg").value=document.getElementById("txtImg").style.backgroundImage="url('"+imageURI+"')"; 
+    alert(document.getElementsByName("txtImg").value);
+alert("image1");
+document.getElementById("txtrecuperar").style.backgroundImage="url('"+imageURI+"')";
+}
+
+
+/*
+function getPhoto(source) { 
+    navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 90, 
+        destinationType: destinationType.FILE_URI, 
+    sourceType: source }); 
+    alert("get Picture");
+}
+*/
+function onFail(message) { 
+    alert('Failed because: ' + message); 
+}
+/*	navigator.camera.getPicture(onSuccess, onFail, { quality: 50, 
+    destinationType: Camera.DestinationType.FILE_URI 
+}); 
+
+function onSuccess(imageURI) { 
+    var image = document.getElementById('myImage'); 
+    image.src = imageURI; 
+}*/
+</script>
+	</div>
+    </body>
+</html>

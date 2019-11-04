@@ -1,0 +1,67 @@
+<!--AIzaSyCwQ0YAMOF7cX8IY1pFStnzpUX2UDCDyKk-->
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="maps">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Google Maps con Javascript</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    	<div id="map"></div>
+    	<button onclick="miUbicacion()">Mi ubicacion</button>
+    	<button onclick="ponerMarca(19.352782,-99.282443)">UAM</button>
+    	<button onclick="manual()">Ingresar...</button>
+    	<script> 
+    		var mapDiv;
+    		var map;
+    		var marca;
+
+    		function initMap(){
+    			mapDiv= document.getElementById('map');
+    			map= new google.maps.Map(mapDiv, {
+    				center: {lat: 21.081709, lng:  -99.126830},
+    				zoom: 3
+    			});
+    		}
+
+    		function ponerMarca(latitude, longitude){
+    			map.setZoom(15);
+    			map.setCenter({lat: latitude, lng:longitude});
+    			marca= new google.maps.Marker({
+    				position: {lat: latitude, lng: longitude},
+    				map:map
+    			});
+    		}
+
+    		function manual(){
+				var latitud=prompt("Ingresa latitud:");
+				var longitud=prompt("Ingresa longitud:");
+				ponerMarca(latitud, longitud);
+			}
+
+			function miUbicacion(){
+				//Si el navegador soporta geolocalizacion
+				if(navigator.geolocation){
+					navigator.geolocation.getCurrentPosition(
+						showPosition,
+						showError);
+				}
+				//Si el navegador no soporta
+				else{
+					alert("Tu navegador no soporta geolocalizacion");
+				}
+			}
+
+			function showPosition(position){
+				ponerMarca(position.coords.latitude, position.coords.longitude);
+			}
+
+			function showError(error){
+				alert(error.code);
+			}
+
+		</script><script src="http://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+    </body>
+</html>

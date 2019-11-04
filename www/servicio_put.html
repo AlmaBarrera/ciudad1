@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style type="text/css">
+      html, body { height: 70%; width:100%; margin: 0; padding: 0; }
+      #map { height: 75%;  margin-top: -100px }
+</style>
+ <meta charset="UTF-8">
+  <meta name="msapplication-tap-highlight" content="no" />
+ <title>Publicar</title>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <!-- Latest compiled and minified CSS -->
+         <script src="cordova.js"></script>
+         <script src="/js/index.js"></script>
+   		 <script type="text/javascript" charset="utf-8"></script>
+ 
+ </head>
+<body>
+<div id="map"></div> 
+ <h1>Formulario de prueba ciudad</h1>
+  <form id="fsuscribe" accept-charset="UTF-8" action="" method="get">
+	<label  for="Nombre">Nombre:</label>
+	<input class="form-control" id="name" type="text" name="name" value="" />	 
+	<br/>
+	<label  for="fecha">Fecha:</label>
+	<input type="date" class="form-control" id="fecha" name="fecha" value=""  >
+	<br/>						
+	<label  for="hora">Hora:</label>
+	<input type="text" class="form-control" id="hora" name="hora" value="" >
+	<br/>
+	<label  for="coment">Comentario:</label>
+	<input type="text" class="form-control" id="coment" name="coment"  >	
+	<br/>			
+	Selecciona  <select id="tag" name="tag" class="form-control">
+						<option value="1">Robo</option >
+						<option value="2">Zona insegura</option>
+						<option value="3">Vandalismo</option>
+						<option value="4">Bache</option>
+						<option value="5">Corruoción</option>
+						<option value="6">Accidente</option>
+						<option value="9">bache</option>
+						</select>	
+	<br/>
+	<input type="file"  name="img" id="img" class="btn btn-link btn-xs" >
+	<br/>
+	<input id="lati" name="lati" type="" /> <input id="longi" name="longi" type="" />
+	<button onclick="miUbicacion()" >Ubicacion </button><br/>
+	<br/>
+	 Coordenadas: <input  id="ubicacion" name="ubicacion"   />
+	<br/><br/>
+	  <button  type="button" id="nipsubmit" class="boton" >Registrar mi participación2</button>
+   </form>
+ </body>
+</html>
+ <!--FUNCION PARA INSERTAR DATOS-->  
+
+
+    <script> 
+    		var mapDiv;
+    		var map;
+    		var marca;
+
+    		function initMap(){
+    			mapDiv= document.getElementById('map');
+    			map= new google.maps.Map(mapDiv, {
+    				center: {lat: 21.081709, lng:  -99.126830},
+    				zoom: 4
+    			});
+    			alert("inicia mapa basico")
+    		}
+
+    		function ponerMarca(latitude, longitude){
+    			map.setZoom(15);
+    			map.setCenter({lat: latitude, lng:longitude});
+    			marca= new google.maps.Marker({
+    				position: {lat: latitude, lng: longitude},
+    				map:map
+    			});
+
+    			alert("poner marca");
+    		}
+
+			function miUbicacion(){
+				//Si el navegador soporta geolocalizacion
+				if(navigator.geolocation){
+					navigator.geolocation.getCurrentPosition(
+						showPosition,
+						showError);
+
+				}
+
+				//Si el navegador no soporta
+				else{
+					alert("Tu navegador no soporta geolocalizacion");
+				}
+			}
+ 
+			function showPosition(position){
+				ponerMarca(position.coords.latitude, position.coords.longitude);
+				alert("a"+position.coords.latitude);
+				alert("b"+position.coords.longitude);	
+				var x=(position.coords.latitude+","+position.coords.longitude);
+				alert(x);
+				document.getElementsByName("txtUbicacion").value = x;
+					
+			}
+
+			function showError(error){
+				alert(error.code);
+				alert("error");
+			}
+
+		</script>
+	<script src="http://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#nipsubmit").on("click", function(event){	
+		event.preventDefault();
+            var name = $("input#name").val();
+            var img = $("input#img").val();
+            var coment = $("input#coment").val();
+            var fecha = $("input#fecha").val();
+            var hora = $("input#hora").val();
+            var tag = $("#tag").val();
+            var ubicacion = $("input#ubicacion").val();
+            var longi = $("input#longi").val();
+            var lati = $("input#lati").val();
+            jQuery.ajax({
+            	type: "get",
+				url: "http://192.168.1.80/welcome/holamundo",
+				dataType: 'json',
+				data: {
+					name: name, img:img, coment:coment, fecha:fecha, hora:hora, tag:tag, ubicacion:ubicacion, longi:longi,lati:lati
+					},
+            });	
+	});	
+});
+</script>

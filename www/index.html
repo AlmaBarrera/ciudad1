@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+        <!-- Latest compiled and minified CSS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+
+
+        <title>Mi Ciudad</title>
+        <script src="cordova.js"></script>
+        <script src="/js/index.js"></script>
+        <script>
+		function validar(obj){
+			var d=document.formulario;
+			if(obj.checked==true){
+					d.boton.disabled = false;
+				}else{
+					d.boton.disabled= true;
+				}
+		}
+	</script> 
+	
+    </head>
+    <body>
+    <h1> <center>Mi Ciudad</center></h1>
+    <div class="row">
+	  <div class="col-md-12">
+		  <div class="col-md-1"></div>
+		  <div class="col-md-6"><h5><center>Comparte información útil con los vecinos</center> </h5></div>
+		  <div class="col-md-1"></div>
+		  <!--<div class="col-md-1"><center><img src="img/house128.png" alt="" /></center></div>-->
+	  </div>
+	  <div class="col-md-12">
+	    <div class="col-md-1"></div>
+	  	<div class="col-md-6"><center><img src="img/house128.png" alt="" /></center></div>
+	    <div class="col-md-1"></div>
+	  </div>
+	 
+     <div class="row"><br/><br/>
+    	<a class="btn btn-primary btn-lg btn-block" href="compartir.html" role="button" name="boton">Continuar</a><br/>
+    	<a class="btn btn-secondary btn-lg btn-block" href="politicas.html" role="button" name="boton">Registrarse</a>
+	</div> 	
+   </div>
+  	  <!--<a class="btn btn-default" href="politicas.html" role="button">Consultar</a>-->
+  
+
+    </body> 
+</html>

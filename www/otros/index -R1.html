@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello World</title>
+         <script src="cordova.js"></script>
+         <script src="/js/index.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        // Wait for Cordova to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+        
+         
+
+        var currentRow;
+        // Populate the database
+        //
+        function populateDB(tx) {
+        	tx.executeSql('DROP TABLE IF EXISTS DEMO ');
+        	alert("drop");
+            tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id INTEGER PRIMARY KEY AUTOINCREMENT, name,edad,email)');
+            alert("creandoDB");
+        }
+
+        // Query the database
+        //
+        function queryDB(tx) {
+            tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+        }
+
+        function searchQueryDB(tx) {
+            tx.executeSql("SELECT * FROM DEMO where name like ('%"+ document.getElementById("txtName").value + "%')",
+                    [], querySuccess, errorCB);
+        }
+        // Query the success callback
+        //
+        function querySuccess(tx, results) {
+            var tblText='<table id="t01"><tr><th>ID</th> <th>Name</th> <th>Edad</th><th>Email</th></tr>';
+            var len = results.rows.length;
+            for (var i = 0; i < len; i++) {
+                var tmpArgs=results.rows.item(i).id + ",'" + results.rows.item(i).name
+                        + "','" + results.rows.item(i).edad+"'"+"'"+results.rows.item(i).email+"'";
+                tblText +='<tr onclick="goPopup('+ tmpArgs + ');"><td>' + results.rows.item(i).id +'</td><td>'
+                        + results.rows.item(i).name +'</td><td>' + results.rows.item(i).edad +'</td><td>'+results.rows.item(i).email+'</td></tr>';
+            }
+            tblText +="</table>";
+            document.getElementById("tblDiv").innerHTML =tblText;
+        }
+
+        //Delete query
+        function deleteRow(tx) {
+          tx.executeSql('DELETE FROM DEMO WHERE id = ' + currentRow, [], queryDB, errorCB);
+        }
+
+        // Transaction error callback
+        //
+        function errorCB(err) {
+            alert("Error processing SQL: "+err.code+ err.description);
+        }
+
+        // Transaction success callback
+        //
+        function successCB() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(queryDB, errorCB);
+            alert("successCB");
+        }
+
+         // Cordova is ready
+        //
+        function onDeviceReady() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(populateDB, errorCB, successCB);
+            alert("onDeviceReady");
+        }
+
+        //Insert query
+        //
+        function insertDB(tx) {
+            tx.executeSql('INSERT INTO DEMO (name,edad,email) VALUES ("' +document.getElementById("txtName").value
+                    +'","'+document.getElementById("txtEdad").value+'","*")');
+        }
+
+        function goInsert() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(insertDB, errorCB, successCB);
+        }
+
+        function goSearch() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(searchQueryDB, errorCB);
+        }
+
+        function goDelete() {
+             var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+             db.transaction(deleteRow, errorCB);
+             document.getElementById('qrpopup').style.display='none';
+        }
+
+        //Show the popup after tapping a row in table
+        //
+        function goPopup(row,rowname,rowedad) {
+            currentRow=row;
+            document.getElementById("qrpopup").style.display="block";
+            document.getElementById("editNameBox").value = rowname;
+            document.getElementById("editEdadBox").value = rowedad;
+        }
+
+        function editRow(tx) {
+            tx.executeSql('UPDATE DEMO SET name ="'+document.getElementById("editNameBox").value+
+                    '", edad= "'+document.getElementById("editEdadBox").value+ '" WHERE id = '
+                    + currentRow, [], queryDB, errorCB);
+        }
+        function goEdit() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(editRow, errorCB);
+            document.getElementById('qrpopup').style.display='none';
+        }
+
+    </script>
+    </head>
+    <body>
+        
+    <h1>My first App drop1</h1>
+    <p>Open Database</p>
+    <div id="qrpopup" > //The hidden div tag for implementing the popup
+            <hr/>
+            <input type="text" id="editNameBox"><br>
+            <input type="text" id="editEdadBox"><br>
+            <button onclick="goDelete()">Delete</button>
+            <button onclick="goEdit()">Edit</button>
+            <button onclick="document.getElementById('qrpopup').style.display='none';">Discard</button>
+    </div>
+
+    <div>
+        Names<input type="text" value="Name" id="txtName"><br/><br/>6
+        Edad<input type="text" value="123" id="txtEdad"><hr/>
+    </div>
+    <div id="tblDiv"></div>
+    <div style="text-align: center">
+        <button onclick="goInsert()">Insert</button>
+        <button onclick="goSearch()">Search</button>
+        <button onclick="successCB()">Show All</button>
+    </div>
+
+    </body>
+</html>

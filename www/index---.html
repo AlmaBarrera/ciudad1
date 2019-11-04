@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>READ JSON Example (getJSON)</title>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<!-- <script type="text/javascript">
+ $(document).ready(function() {
+ $.getJSON("http://192.168.1.80/index.php/welcome/getnews",function(result){
+ $.each(result, function(i, field){
+ $("#output").append("name: "+ field.name +"<br/>");
+ });
+ });
+ });
+ </script>-->
+ 
+<!--FUNCION PARA CONSULTAR
+<script type="text/javascript">
+alert("hola");
+ $(document).ready(function() {
+ $.getJSON("http://192.168.1.80/index.php/welcome/getnews",function(result){
+ $.each(result, function(i, field){
+ $("#output").append("name: "+ field.name +"<br/><hr>");
+  
+ });
+ });
+ });
+ </script>-->
+ <h1>Formulario de prueba ciudad***</h1>
+  <form id="fsuscribe" accept-charset="UTF-8" action="" method="get">
+
+	  <input class="form-control" id="name" type="text" name="name" value="" />	 
+	  <button class="btn btn-primary" type="button" id="nipsubmit" class="boton" >Registrar mi participación2</button>
+	  
+   </form>
+   
+   <a href="servicio_put.html"><button type="button" class="btn btn-warning">servicio_put</button></a>
+   <a href="servicio_get.php"><button type="button" class="btn btn-warning">servicio_get</button></a>
+	<a href="compartir.html"><button type="button" class="btn btn-warning">compartir</button></a>
+
+ <!--FUNCION PARA Insertar-->  
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#nipsubmit").on("click", function(event){	
+		event.preventDefault();
+            var name = $("input#name").val();
+            jQuery.ajax({
+            	type: "get",
+				url: "http://192.168.1.80/welcome/holamundo",
+				dataType: 'json',
+				data: {
+					name: name
+					},
+            });	
+	});	
+});
+
+
+</script>
+
+  
+
+</head>
+<body>
+ <div id="output"></div>
+</body>
+</html>

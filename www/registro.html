@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+      <!--  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />-->
+        <!-- Latest compiled and minified CSS -->
+
+        <title>Register</title>
+         <script src="cordova.js"></script>
+         <script src="/js/index.js"></script>
+   		 <script type="text/javascript" charset="utf-8">
+
+
+
+        // Wait for Cordova to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+        
+        //obtener fecha
+  
+
+        var currentRow;
+        // Populate the database
+        //
+        function populateDB(tx) {
+        //	tx.executeSql('DROP TABLE IF EXISTS DEMO ');
+        //	alert("drop");
+            tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id INTEGER PRIMARY KEY AUTOINCREMENT, name, edad, email, pass,cpass,pol,estado,fecha, hora)');
+          //  alert("creandoDB");
+        }
+
+        // Query the database
+        //
+        function queryDB(tx) {
+            tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+        }
+
+        function searchQueryDB(tx) {
+            tx.executeSql("SELECT * FROM DEMO where name like ('%"+ document.getElementById("txtName").value + "%')",
+                    [], querySuccess, errorCB);
+        }
+        // Query the success callback
+        //
+        function querySuccess(tx, results) {
+            var tblText='<table id="t01"><tr><th>ID</th> <th>Name</th> <th>Edad</th><th>Email</th><th>Pass</th><th>Cpass</th><th>Pol</th><th>Est</th><th>Fecha</th><th>Hora</th></tr>';
+            var len = results.rows.length;
+            for (var i = 0; i < len; i++) {
+                var tmpArgs=results.rows.item(i).id + ",'" + results.rows.item(i).name  +"',"+
+                									   "'" + results.rows.item(i).edad  +"',"+
+                									   "'" + results.rows.item(i).email +"',"+
+                									   "'" + results.rows.item(i).pass  +"',"+
+                									   "'" + results.rows.item(i).cpass +"',"+
+                									   "'" + results.rows.item(i).pol   +"',"+
+                									   "'" + results.rows.item(i).estado+"',"+
+                									   "'" + results.rows.item(i).fecha +"',"+
+                									   "'" + results.rows.item(i).hora+"'";
+                tblText +='<tr onclick="goPopup('+ tmpArgs + ');">'+
+                				'<td>' + results.rows.item(i).id     +'</td>'+
+                				'<td>' + results.rows.item(i).name   +'</td>'+
+                				'<td>' + results.rows.item(i).edad   +'</td>'+
+                				'<td>' + results.rows.item(i).email  +'</td>'+
+                				'<td>' + results.rows.item(i).pass   +'</td>'+
+                				'<td>' + results.rows.item(i).cpass  +'</td>'+
+                				'<td>' + results.rows.item(i).pol    +'</td>'+
+                				'<td>' + results.rows.item(i).estado    +'</td>'+
+                				'<td>' + results.rows.item(i).fecha    +'</td>'+
+                				'<td>' + results.rows.item(i).hora    +'</td>'+
+                		  '</tr>';
+            }
+            tblText +="</table>";
+        //    document.getElementById("tblDiv").innerHTML =tblText;
+        }
+
+        //Delete query
+        function deleteRow(tx) {
+          tx.executeSql('DELETE FROM DEMO WHERE id = ' + currentRow, [], queryDB, errorCB);
+        }
+
+        // Transaction error callback
+        //
+        function errorCB(err) {
+            alert("Error processing SQL: "+err.code+ err.description);
+        }
+
+        // Transaction success callback
+        //
+        function successCB() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(queryDB, errorCB);
+          //  alert("successCB");
+        }
+
+         // Cordova is ready
+        //
+        function onDeviceReady() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(populateDB, errorCB, successCB);
+           // alert("onDeviceReady");
+        }
+
+        //Insert query
+        //
+        function insertDB(tx) {
+            tx.executeSql('INSERT INTO DEMO (name,edad,email,pass,cpass,pol,estado,fecha,hora) VALUES ('+'"' +document.getElementById("txtName").value  +'",'+
+            														       '"' +document.getElementById("txtEdad").value+'",'+
+            														       '"' +document.getElementById("txtEmail").value +'",'+
+            														       '"' +document.getElementById("txtPass").value  +'",'+
+            														       '"' +document.getElementById("txtCpass").value +'",'+
+            														       '"' +document.getElementsByName("txtPol").value +'",'+
+            														       '"' +document.getElementsByName("txtEstado").value +'",'+
+            														       '"' +document.getElementsByName("txtFecha").value +'",'+
+            														       '"' +document.getElementsByName("txtHora").value +'"'
+            														 +')');
+            document.getElementById("txtName").value="";
+            document.getElementById("txtEdad").value="";	
+            document.getElementById("txtEmail").value="";	
+            document.getElementById("txtPass").value="";	
+            document.getElementById("txtCpass").value=""; 
+            document.getElementsByName("txtPol").value="";
+            document.getElementsByName("txtEstado").value="";
+            document.getElementsByName("txtFecha").value;
+            document.getElementsByName("txtHora").value;
+        }
+
+        function goInsert() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(insertDB, errorCB, successCB);
+            goDate();
+        }
+
+        function goSearch() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(searchQueryDB, errorCB);
+        }
+
+        function goDelete() {
+             var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+             db.transaction(deleteRow, errorCB);
+             document.getElementById('qrpopup').style.display='none';
+        }
+
+        //Show the popup after tapping a row in table
+        //
+        function goPopup(row,rowname,rowedad,rowemail,rowpass,rowcpass,rowpol,rowest,rowfecha,rowhora) {
+            currentRow=row;
+            document.getElementById("qrpopup").style.display="block";
+            document.getElementById("editNameBox").value = rowname;
+            document.getElementById("editEdadBox").value = rowedad;
+            document.getElementById("editEmailBox").value = rowemail;
+            document.getElementById("editPassBox").value = rowpass;
+            document.getElementById("editCpassBox").value = rowcpass;
+            document.getElementById("editPolBox").value = rowpol;
+            document.getElementById("editEstadoBox").value = rowest;
+            document.getElementById("editFechaBox").value = rowfecha;
+            document.getElementById("editHoraBox").value = rowhora;
+        }
+
+        function editRow(tx) {
+            tx.executeSql('UPDATE DEMO SET name  ="'+document.getElementById("editNameBox").value+'",'+
+            							 ' edad="'+document.getElementById("editEdadBox").value+ '",'+
+            							 ' email="'+document.getElementById("editEmailBox").value+ '",'+
+            							 ' pass="'+document.getElementById("editPassBox").value+ '",'+
+            							 ' cpass ="'+document.getElementById("editCpassBox").value+ '",'+
+            							 ' pol ="'+document.getElementById("editPolBox").value+ '",'+
+            							 ' estado ="'+document.getElementById("editEstadoBox").value+ '",'+
+            							 ' fecha ="'+document.getElementById("editFechaBox").value+ '",'+
+            							 ' hora ="'+document.getElementById("editHoraBox").value+ '"'+
+            							 ' WHERE id = '
+                    + currentRow, [], queryDB, errorCB);
+        }
+        function goEdit() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(editRow, errorCB);
+            document.getElementById('qrpopup').style.display='none';
+        }
+		function goDate(){
+			var d = new Date();
+			var fecha_actual =d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear();
+			var hora_actual =d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+			document.getElementsByName("txtFecha").value = fecha_actual;
+			document.getElementsByName("txtHora").value = hora_actual;
+			document.getElementsByName("txtPol").value="ok";
+			document.getElementsByName("txtEstado").value="activo";
+			document.getElementById("txtFecha").value = fecha_actual;
+			document.getElementById("txtHora").value = hora_actual;
+			document.getElementById("txtPol").value="ok";
+			document.getElementById("txtEstado").value="activo";			
+		//	alert("function");
+			return (fecha_actual, hora_actual);
+		}
+
+    </script>
+    </head>
+    <body>
+	<div class="container"    
+    <center><h4>Registro de Usuario</h4></center>
+    <div id="qrpopup" > 
+<!--    //The hidden div tag for implementing the popup
+            <hr/>
+            <input type="text" id="editNameBox"><br>
+            <input type="text" id="editEdadBox"><br>
+            <input type="text" id="editEmailBox"><br>
+            <input type="password" id="editPassBox"><br>
+            <input type="password" id="editCpassBox"><br>
+            <input type="text" id="editPolBox"><br>
+            <input type="text" id="editEstadoBox"><br>
+            <input type="text" id="editFechaBox"><br>
+            <input type="text" id="editHoraBox"><br>
+            <button onclick="goDelete()">Delete</button>
+            <button onclick="goEdit()">Edit</button>
+            <button onclick="document.getElementById('qrpopup').style.display='none';">Discard</button>-->
+    </div>
+
+    <div class="form-group"> 
+	    <label class="control-label col-sm-2">Nombre:</label>
+	    <div class="col-sm-10">
+	    <input class="form-control" type="text" value="Name" id="txtName">
+	    </div>
+    </div>
+    <div class="form-group"> 
+	    <label class="control-label col-sm-2">Edad:</label>
+	    <div class="col-sm-10">
+	    <input class="form-control" type="text" value="123" id="txtEdad">
+	    </div>
+    </div>   
+    <div class="form-group"> 
+	    <label class="control-label col-sm-2">Correo:</label>
+	    <div class="col-sm-10">
+	    <input class="form-control" type="text" value="a@q" id="txtEmail">
+	    </div>
+    </div> 
+    <div class="form-group"> 
+	    <label class="control-label col-sm-2">Contraseña:</label>
+	    <div class="col-sm-10">
+	    <input class="form-control" type="password" value="123" id="txtPass">
+	    </div>
+	    <label class="control-label col-sm-2">Confirmar Contraseña:</label>
+	    <div class="col-sm-10">
+	    <input class="form-control" type="password" value="1234" id="txtCpass">
+	    </div>
+    </div> 
+    
+     <!-- 	Pol<input type="text" value="ok" id="txtPol"><hr/>
+        Estado<input type="text" value="ok" id="txtEstado"><hr/>
+         Fecha<input type="hidden" value="" name="txtFecha" id="txtFecha"><hr/>
+        Hora<input type="hidden" value="" name="txtHora" id="txtHora"><hr/>-->
+    
+   <!-- <div id="tblDiv"></div>-->
+<!--    <div class="row">
+		<div class="col-sm-4">
+		    <button class="btn btn-default" onclick="goInsert()" ><img src="img/save24.png" alt="" />Guardar</button>
+		</div>
+		<div class="col-sm-4">
+			<a class="btn btn-default" href="index.html" role="button"><img src="img/cancel24.png" alt="" />Cancelar</a>
+		</div>
+	</div>-->
+<!--    <div style="text-align: center">
+        <button onclick="goInsert()">Insert</button>
+        <button onclick="goSearch()">Search</button>
+        <button onclick="successCB()">Show All</button>
+    </div>-->
+<!-- <div class="btn-group btn-group-sm">
+	<center><a class=" btn btn-primary " onclick="goInsert()" href="compartir.html" role="button"><img src="img/save24.png" alt="" /> Guardar</a>
+    <a class=" btn btn-primary " href="index.html" role="button"><img src="img/cancel24.png" alt="" /> Cancelar</a></center>
+    
+  </div>-->
+  
+
+	<div class="col-xs-12 "><p></p>
+		<div class="col-xs-6" >
+		<a class="btn btn-default" onclick="goInsert()" href="compartir.html" role="button"><img src="img/save24.png" alt="" />Guardar</a>
+		</div>
+		<div class="col-xs-6 " >
+		<a class="btn btn-default" href="index.html" role="button"><img src="img/cancel24.png" alt="" />Cancelar</a>
+		</div>
+	</div>
+	</div>
+    </body>
+</html>
