@@ -8,8 +8,102 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
-    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <!--    <content src="hoja0.html" />
+    <content src="hoja1.html" />
+    <content src="hoja2.html" />-->
     
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="14" />
+    <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
+    <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
+    <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0" />
+    <plugin name="cordova-plugin-console" source="npm" spec="~1.0.2" />
+    <plugin name="cordova-plugin-contacts" source="npm" spec="~2.0.1" />
+    <plugin name="cordova-plugin-device" source="npm" spec="~1.1.1" />
+    <plugin name="cordova-plugin-device-motion" source="npm" spec="~1.2.0" />
+    <plugin name="cordova-plugin-device-orientation" source="npm" spec="~1.0.2" />
+    <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.0" />
+    <plugin name="cordova-plugin-file" source="npm" spec="~4.1.1" />
+    <plugin name="cordova-plugin-file-transfer" source="npm" spec="~1.5.0" />
+    <plugin name="cordova-plugin-geolocation" source="npm" spec="~2.1.0" />
+    <plugin name="cordova-plugin-globalization" source="npm" spec="~1.0.3" />
+    <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.3.0" />
+    <plugin name="cordova-plugin-media" source="npm" spec="~2.2.0" />
+    <plugin name="cordova-plugin-network-information" source="npm" spec="~1.2.0" />
+    <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1" />
+    <plugin name="cordova-plugin-statusbar" source="npm" spec="~2.1.2" />
+    <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0" />
+    <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
+    <platform name="android">
+        <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
+        <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
+        <icon density="xhdpi" src="www/res/icon/android/drawable-xhdpi-icon.png" />
+        <icon density="xxhdpi" src="www/res/icon/android/drawable-xxhdpi-icon.png" />
+        <icon density="xxxhdpi" src="www/res/icon/android/drawable-xxxhdpi-icon.png" />
+        <splash density="land-ldpi" src="www/res/screen/android/drawable-land-ldpi-screen.png" />
+        <splash density="land-mdpi" src="www/res/screen/android/drawable-land-mdpi-screen.png" />
+        <splash density="land-hdpi" src="www/res/screen/android/drawable-land-hdpi-screen.png" />
+        <splash density="land-xhdpi" src="www/res/screen/android/drawable-land-xhdpi-screen.png" />
+        <splash density="land-xxhdpi" src="www/res/screen/android/drawable-land-xxhdpi-screen.png" />
+        <splash density="land-xxxhdpi" src="www/res/screen/android/drawable-land-xxxhdpi-screen.png" />
+        <splash density="port-ldpi" src="www/res/screen/android/drawable-port-ldpi-screen.png" />
+        <splash density="port-mdpi" src="www/res/screen/android/drawable-port-mdpi-screen.png" />
+        <splash density="port-hdpi" src="www/res/screen/android/drawable-port-hdpi-screen.png" />
+        <splash density="port-xhdpi" src="www/res/screen/android/drawable-port-xhdpi-screen.png" />
+        <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
+        <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
+    </platform>
+    <platform name="ios">
+        <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />
+        <icon height="114" platform="ios" src="www/res/icon/ios/icon@2x.png" width="114" />
+        <icon height="40" platform="ios" src="www/res/icon/ios/icon-40.png" width="40" />
+        <icon height="80" platform="ios" src="www/res/icon/ios/icon-40@2x.png" width="80" />
+        <icon height="50" platform="ios" src="www/res/icon/ios/icon-50.png" width="50" />
+        <icon height="100" platform="ios" src="www/res/icon/ios/icon-50@2x.png" width="100" />
+        <icon height="60" platform="ios" src="www/res/icon/ios/icon-60.png" width="60" />
+        <icon height="120" platform="ios" src="www/res/icon/ios/icon-60@2x.png" width="120" />
+        <icon height="180" platform="ios" src="www/res/icon/ios/icon-60@3x.png" width="180" />
+        <icon height="72" platform="ios" src="www/res/icon/ios/icon-72.png" width="72" />
+        <icon height="144" platform="ios" src="www/res/icon/ios/icon-72@2x.png" width="144" />
+        <icon height="76" platform="ios" src="www/res/icon/ios/icon-76.png" width="76" />
+        <icon height="152" platform="ios" src="www/res/icon/ios/icon-76@2x.png" width="152" />
+        <icon height="29" platform="ios" src="www/res/icon/ios/icon-small.png" width="29" />
+        <icon height="58" platform="ios" src="www/res/icon/ios/icon-small@2x.png" width="58" />
+        <icon height="87" platform="ios" src="www/res/icon/ios/icon-small@3x.png" width="87" />
+        <splash height="1136" platform="ios" src="www/res/screen/ios/Default-568h@2x~iphone.png" width="640" />
+        <splash height="1334" platform="ios" src="www/res/screen/ios/Default-667h.png" width="750" />
+        <splash height="2208" platform="ios" src="www/res/screen/ios/Default-736h.png" width="1242" />
+        <splash height="1242" platform="ios" src="www/res/screen/ios/Default-Landscape-736h.png" width="2208" />
+        <splash height="1536" platform="ios" src="www/res/screen/ios/Default-Landscape@2x~ipad.png" width="2048" />
+        <splash height="768" platform="ios" src="www/res/screen/ios/Default-Landscape~ipad.png" width="1024" />
+        <splash height="2048" platform="ios" src="www/res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" />
+        <splash height="1024" platform="ios" src="www/res/screen/ios/Default-Portrait~ipad.png" width="768" />
+        <splash height="960" platform="ios" src="www/res/screen/ios/Default@2x~iphone.png" width="640" />
+        <splash height="480" platform="ios" src="www/res/screen/ios/Default~iphone.png" width="320" />
+    </platform>
+    <platform name="wp8">
+        <icon height="99" platform="wp8" src="www/res/icon/wp8/ApplicationIcon.png" width="99" />
+        <icon height="159" platform="wp8" src="www/res/icon/wp8/Background.png" width="159" />
+        <splash height="1280" platform="wp8" src="www/res/screen/wp8/screen-portrait.jpg" width="768" />
+    </platform>
+    <platform name="windows">
+        <icon height="150" platform="windows" src="www/res/icon/windows/Square150x150Logo.scale-100.png" width="150" />
+        <icon height="30" platform="windows" src="www/res/icon/windows/Square30x30Logo.scale-100.png" width="30" />
+        <icon height="50" platform="windows" src="www/res/icon/windows/StoreLogo.scale-100.png" width="50" />
+        <splash height="300" platform="windows" src="www/res/screen/windows/SplashScreen.scale-100.png" width="620" />
+        <icon height="120" platform="windows" src="www/res/icon/windows/StoreLogo.scale-240.png" width="120" />
+        <icon height="44" platform="windows" src="www/res/icon/windows/Square44x44Logo.scale-100.png" width="44" />
+        <icon height="106" platform="windows" src="www/res/icon/windows/Square44x44Logo.scale-240.png" width="106" />
+        <icon height="70" platform="windows" src="www/res/icon/windows/Square70x70Logo.scale-100.png" width="70" />
+        <icon height="71" platform="windows" src="www/res/icon/windows/Square71x71Logo.scale-100.png" width="71" />
+        <icon height="170" platform="windows" src="www/res/icon/windows/Square71x71Logo.scale-240.png" width="170" />
+        <icon height="360" platform="windows" src="www/res/icon/windows/Square150x150Logo.scale-240.png" width="360" />
+        <icon height="310" platform="windows" src="www/res/icon/windows/Square310x310Logo.scale-100.png" width="310" />
+        <icon height="150" platform="windows" src="www/res/icon/windows/Wide310x150Logo.scale-100.png" width="310" />
+        <icon height="360" platform="windows" src="www/res/icon/windows/Wide310x150Logo.scale-240.png" width="744" />
+        <splash height="1920" platform="windows" src="www/res/screen/windows/SplashScreenPhone.scale-240.png" width="1152" />
+    </platform>
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -24,254 +118,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-
-
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:rim="http://www.blackberry.com/ns/widgets"
-    id="cordova-plugin-camera"
-    version="2.3.0">
-    <name>Camera</name>
-    <description>Cordova Camera Plugin</description>
-    <license>Apache 2.0</license>
-    <keywords>cordova,camera</keywords>
-    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-camera.git</repo>
-    <issue>https://issues.apache.org/jira/browse/CB/component/12320645</issue>
-
-    <dependency id="cordova-plugin-compat" version="^1.0.0" />
-    <js-module src="www/js/CameraConstants.js" name="Camera">
-        <clobbers target="Camera" />
-    </js-module>
-
-    <js-module src="www/js/CameraPopoverOptions.js" name="CameraPopoverOptions">
-        <clobbers target="CameraPopoverOptions" />
-    </js-module>
-
-
-
-    <js-module src="www/js/Camera.js" name="camera">
-        <clobbers target="navigator.camera" />
-    </js-module>
-
-    <!-- firefoxos -->
-    <platform name="firefoxos">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Camera">
-                <param name="firefoxos-package" value="Camera" />
-            </feature>
-        </config-file>
-
-        <js-module src="src/firefoxos/CameraProxy.js" name="CameraProxy">
-          <runs />
-        </js-module>
-    </platform>
-
-    <!-- android -->
-    <platform name="android">
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Camera">
-                <param name="android-package" value="org.apache.cordova.camera.CameraLauncher"/>
-            </feature>
-        </config-file>
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-        </config-file>
-
-        <source-file src="src/android/CameraLauncher.java" target-dir="src/org/apache/cordova/camera" />
-        <source-file src="src/android/FileHelper.java" target-dir="src/org/apache/cordova/camera" />
-        <source-file src="src/android/ExifHelper.java" target-dir="src/org/apache/cordova/camera" />
-
-        <js-module src="www/js/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-        </js-module>
-
-     </platform>
-
-    <!-- amazon-fireos -->
-    <platform name="amazon-fireos">
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Camera">
-                <param name="android-package" value="org.apache.cordova.camera.CameraLauncher"/>
-            </feature>
-        </config-file>
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-        </config-file>
-
-        <source-file src="src/android/CameraLauncher.java" target-dir="src/org/apache/cordova/camera" />
-        <source-file src="src/android/FileHelper.java" target-dir="src/org/apache/cordova/camera" />
-        <source-file src="src/android/ExifHelper.java" target-dir="src/org/apache/cordova/camera" />
-
-        <js-module src="www/js/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-        </js-module>
-
-     </platform>
-
-     <!-- ubuntu -->
-     <platform name="ubuntu">
-         <config-file target="config.xml" parent="/*">
-             <feature name="Camera">
-                 <param policy_group="camera" policy_version="1" />
-             </feature>
-         </config-file>
-         <js-module src="www/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-         </js-module>
-         <header-file src="src/ubuntu/camera.h" />
-         <source-file src="src/ubuntu/camera.cpp" />
-
-         <resource-file src="src/ubuntu/back.png" />
-         <resource-file src="src/ubuntu/CaptureWidget.qml" />
-         <resource-file src="src/ubuntu/shoot.png" />
-         <resource-file src="src/ubuntu/toolbar-left.png" />
-         <resource-file src="src/ubuntu/toolbar-middle.png" />
-         <resource-file src="src/ubuntu/toolbar-right.png" />
-     </platform>
-
-     <!-- ios -->
-     <platform name="ios">
-         <config-file target="config.xml" parent="/*">
-             <feature name="Camera">
-                 <param name="ios-package" value="CDVCamera" />
-             </feature>
-             <preference name="CameraUsesGeolocation" value="false" />
-         </config-file>
-
-         <js-module src="www/ios/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-         </js-module>
-
-         <header-file src="src/ios/UIImage+CropScaleOrientation.h" />
-         <source-file src="src/ios/UIImage+CropScaleOrientation.m" />
-         <header-file src="src/ios/CDVCamera.h" />
-         <source-file src="src/ios/CDVCamera.m" />
-         <header-file src="src/ios/CDVJpegHeaderWriter.h" />
-         <source-file src="src/ios/CDVJpegHeaderWriter.m" />
-         <header-file src="src/ios/CDVExif.h" />
-         <framework src="ImageIO.framework" weak="true" />
-         <framework src="CoreLocation.framework" />
-         <framework src="CoreGraphics.framework" />
-         <framework src="AssetsLibrary.framework" />
-         <framework src="MobileCoreServices.framework" />
-         <framework src="CoreGraphics.framework" />
-         <framework src="AVFoundation.framework" />
-
-         <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
-         <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
-             <string>$CAMERA_USAGE_DESCRIPTION</string>
-         </config-file>
-
-         <preference name="PHOTOLIBRARY_USAGE_DESCRIPTION" default=" " />
-         <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
-             <string>$PHOTOLIBRARY_USAGE_DESCRIPTION</string>
-         </config-file>
-
-         <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-             <string></string>
-         </config-file>
-
-     </platform>
-
-    <!-- blackberry10 -->
-    <platform name="blackberry10">
-        <source-file src="src/blackberry10/index.js" target-dir="Camera" />
-        <config-file target="www/config.xml" parent="/widget">
-            <feature name="Camera" value="Camera"/>
-        </config-file>
-        <config-file target="www/config.xml" parent="/widget/rim:permissions">
-          <rim:permit>access_shared</rim:permit>
-          <rim:permit>use_camera</rim:permit>
-        </config-file>
-        <js-module src="www/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-        </js-module>
-        <asset src="www/blackberry10/assets" target="chrome" />
-    </platform>
-
-     <!-- wp7 -->
-    <platform name="wp7">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Camera">
-                <param name="wp-package" value="Camera"/>
-            </feature>
-        </config-file>
-
-        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-            <Capability Name="ID_CAP_ISV_CAMERA" />
-            <Capability Name="ID_CAP_MEDIALIB" />
-        </config-file>
-
-        <source-file src="src/wp/Camera.cs" />
-
-
-        <js-module src="www/js/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-        </js-module>
-    </platform>
-
-    <!-- wp8 -->
-    <platform name="wp8">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Camera">
-                <param name="wp-package" value="Camera"/>
-            </feature>
-        </config-file>
-
-        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-            <Capability Name="ID_CAP_ISV_CAMERA" />
-            <Capability Name="ID_CAP_MEDIALIB_PHOTO"/>
-        </config-file>
-
-        <source-file src="src/wp/Camera.cs" />
-
-        <js-module src="www/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-        </js-module>
-    </platform>
-
-    <!-- windows8 -->
-    <platform name="windows8">
-
-        <config-file target="package.appxmanifest" parent="/Package/Capabilities">
-            <Capability Name="picturesLibrary" />
-            <DeviceCapability Name="webcam" />
-        </config-file>
-        <js-module src="www/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-        </js-module>
-        <js-module src="src/windows/CameraProxy.js" name="CameraProxy">
-            <merges target="" />
-        </js-module>
-
-    </platform>
-
-    <!-- browser -->
-    <platform name="browser">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Camera">
-                <param name="browser-package" value="Camera" />
-            </feature>
-        </config-file>
-
-        <js-module src="src/browser/CameraProxy.js" name="CameraProxy">
-            <runs />
-        </js-module>
-    </platform>
-
-    <!-- windows -->
-    <platform name="windows">
-        <config-file target="package.appxmanifest" parent="/Package/Capabilities">
-            <DeviceCapability Name="webcam" />
-        </config-file>
-        <js-module src="www/CameraPopoverHandle.js" name="CameraPopoverHandle">
-            <clobbers target="CameraPopoverHandle" />
-        </js-module>
-        <js-module src="src/windows/CameraProxy.js" name="CameraProxy">
-            <merges target="" />
-        </js-module>
-    </platform>
-</plugin>
-    <engine name="android" spec="https://github.com/apache/cordova-android.git#6.0.0" /> 
-    <engine name="android" spec="https://github.com/apache/cordova-android.git#7.0.0" />
-</widget>    
+    <!--version de cordova en du compudaora-->
+    <engine name="android" spec="https://github.com/apache/cordova-android.git#8.0.0" /> 
+    <engine name="android" spec="https://github.com/apache/cordova-android.git#9.0.0" />
+</widget>
