@@ -272,6 +272,6 @@
         </js-module>
     </platform>
 </plugin>
-    <engine name="android" spec="https://github.com/apache/cordova-android.git#8.0.0" /> 
-    <engine name="android" spec="https://github.com/apache/cordova-android.git#9.0.0" />
+    <engine name="android" spec="https://github.com/apache/cordova-android.git#6.0.0" /> 
+    <engine name="android" spec="https://github.com/apache/cordova-android.git#7.0.0" />
 </widget>    
